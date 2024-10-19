@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.26;
 
 // library AdQueue {
 //     struct AdvertisementSlot {
@@ -39,26 +39,19 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-contract SignatureVerification {
-    using ECDSA for bytes32;
-    using Address for address;
+using ECDSA for bytes32;
+using Address for address;
 
-    function verifySignature(
-        bytes32 message,
-        address signer,
-        bytes memory signature
-    ) public pure returns (bool) {
-        bytes32 hash = message.toEthSignedMessageHash();
-        address recoveredSigner = hash.recover(signature);
-        return signer == recoveredSigner;
-    }
-}
+event Post(bytes32 versionedHash, address creator);
 
 contract PhotoDanksharding {
     // string public currentSponsorUrl;
 
-    function newPost(uint256 kzgCommitment) public {
-        // TODO: Implement
+    function newPost(bytes32 versionedHash, address signer, bytes memory signature) public {
+        bytes32 hash = versionedHash.toEthSignedMessageHash();
+        address recoveredSigner = hash.recover(signature);
+        if (signer != recoveredSigner) revert("signature failure");
+        emit Post(versionedHash, signer);
     }
 
     // function queueAdvertisement(string memory url) public {
