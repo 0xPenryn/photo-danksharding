@@ -5,12 +5,13 @@ import { Inter } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "./providers";
+// Add this import for the login button
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Account Kit Quickstart",
-  description: "Account Kit Quickstart NextJS Template",
+  title: "Photo Danksharding",
+  description: "Photo Danksharding - Account Kit Quickstart NextJS Template",
 };
 
 export default function RootLayout({
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers initialState={initialState}>{children}</Providers>
+        <Providers initialState={initialState}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

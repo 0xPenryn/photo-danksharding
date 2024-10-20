@@ -5,6 +5,12 @@ import {
   useSignerStatus,
   useUser,
 } from "@account-kit/react";
+import { kv } from "@vercel/kv";
+
+// async function getPosts() {
+//   'use server'
+//   const session = await kv.lrange("posts", 0, 100)
+// }
 
 export default function Home() {
   const user = useUser();
